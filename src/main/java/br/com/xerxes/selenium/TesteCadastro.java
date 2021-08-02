@@ -1,6 +1,8 @@
 package br.com.xerxes.selenium;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,11 +16,22 @@ public class TesteCadastro {
 	WebElement element;
 	Select combo;
 	
-	@Test
-	public void testCadastro() {
+	@Before
+	public void inicializa() {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
+	}
+	
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
+	
+	@Test
+	public void testCadastro() {
+		
 		
 		// Preenchimento dos campos
 		
@@ -53,10 +66,7 @@ public class TesteCadastro {
 		Assert.assertEquals("Escolaridade: superior", element.getText());
 		element = driver.findElement(By.id("descEsportes"));
 		Assert.assertEquals("Esportes: Natacao Corrida", element.getText());
-		
-		driver.quit();
-		
-		
+	
 	}
 
 }

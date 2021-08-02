@@ -1,6 +1,8 @@
 package br.com.xerxes.selenium;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -15,12 +17,23 @@ public class TesteRegrasNegocio {
 	
 	WebDriver driver;
 	
-	@Test
-	public void testRegraNome() {
-		
+	@Before
+	public void inicializa() {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
+	}
+	
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
+	
+	@Test
+	public void testRegraNome() {
+		
+		
 		
 		// Teste da regra de negócio
 		
@@ -28,7 +41,6 @@ public class TesteRegrasNegocio {
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
 		alert.accept();
-		driver.quit();
 		
 		
 	}
@@ -36,9 +48,7 @@ public class TesteRegrasNegocio {
 	@Test
 	public void testRegraSobreNome() {
 		
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
 		
 		// Teste da regra de negócio
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Xerxes");
@@ -46,7 +56,6 @@ public class TesteRegrasNegocio {
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
 		alert.accept();
-		driver.quit();
 		
 		
 	}
@@ -54,10 +63,7 @@ public class TesteRegrasNegocio {
 	@Test
 	public void testRegraSexo() {
 		
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-		
+
 		// Teste da regra de negócio
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Xerxes");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Gouveia");
@@ -65,7 +71,7 @@ public class TesteRegrasNegocio {
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
 		alert.accept();
-		driver.quit();
+
 		
 		
 	}
@@ -73,9 +79,7 @@ public class TesteRegrasNegocio {
 	@Test
 	public void testRegraAlimento() {
 		
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
 		
 		// Teste da regra de negócio
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Xerxes");
@@ -87,7 +91,7 @@ public class TesteRegrasNegocio {
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
 		alert.accept();
-		driver.quit();
+
 		
 		
 	}
@@ -95,9 +99,7 @@ public class TesteRegrasNegocio {
 	@Test
 	public void testRegraEsporte() {
 		
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
 		
 		// Teste da regra de negócio
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Xerxes");
@@ -112,7 +114,6 @@ public class TesteRegrasNegocio {
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
 		alert.accept();
-		driver.quit();
 		
 		
 	}
