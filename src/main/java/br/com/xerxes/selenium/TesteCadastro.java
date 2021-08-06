@@ -4,23 +4,22 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
+
+import br.com.xerxes.page.CampoTreinamentoPage;
 
 public class TesteCadastro {
 	
 	WebDriver driver;
-	WebElement element;
-	Select combo;
+	CampoTreinamentoPage campoTreinamentoPage;
 	
 	@Before
 	public void inicializa() {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		campoTreinamentoPage = new CampoTreinamentoPage(driver);
 
 	}
 	
@@ -35,37 +34,24 @@ public class TesteCadastro {
 		
 		// Preenchimento dos campos
 		
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Xerxes");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Gouveia");
-		driver.findElement(By.id("elementosForm:sexo:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-		element = driver.findElement(By.id("elementosForm:escolaridade"));
-		combo = new Select(element);
-		combo.selectByVisibleText("Superior");
-		element = driver.findElement(By.id("elementosForm:esportes"));
-		combo = new Select(element);
-		combo.selectByVisibleText("Natacao");
-		combo.selectByVisibleText("Corrida");
-		
-		element = driver.findElement(By.id("elementosForm:cadastrar"));
-		element.click();
+		campoTreinamentoPage.setName("Xerxes");
+		campoTreinamentoPage.setLastName("Gouveia");
+		campoTreinamentoPage.clickRadioButtonMale();
+		campoTreinamentoPage.clickCheckBoxMeat();
+		campoTreinamentoPage.comboScholaritySetValue("Superior");
+		campoTreinamentoPage.comboSportsSetValue("Natacao");
+		campoTreinamentoPage.comboSportsSetValue("Corrida");
+		campoTreinamentoPage.clickSubmit();
 		
 		// Execução dos testes
 		
-		element = driver.findElement(By.id("resultado"));
-		Assert.assertTrue(element.getText().contains("Cadastrado!"));
-		element = driver.findElement(By.id("descNome"));
-		Assert.assertEquals("Nome: Xerxes", element.getText());
-		element = driver.findElement(By.id("descSobrenome"));
-		Assert.assertEquals("Sobrenome: Gouveia", element.getText());
-		element = driver.findElement(By.id("descSexo"));
-		Assert.assertEquals("Sexo: Masculino", element.getText());
-		element = driver.findElement(By.id("descComida"));
-		Assert.assertEquals("Comida: Carne", element.getText());
-		element = driver.findElement(By.id("descEscolaridade"));
-		Assert.assertEquals("Escolaridade: superior", element.getText());
-		element = driver.findElement(By.id("descEsportes"));
-		Assert.assertEquals("Esportes: Natacao Corrida", element.getText());
+		Assert.assertTrue(campoTreinamentoPage.getResult().contains("Cadastrado!"));
+		Assert.assertEquals("Nome: Xerxes", campoTreinamentoPage.getName());
+		Assert.assertEquals("Sobrenome: Gouveia", campoTreinamentoPage.getLastName());
+		Assert.assertEquals("Sexo: Masculino", campoTreinamentoPage.getGender());
+		Assert.assertEquals("Comida: Carne", campoTreinamentoPage.getMeal());
+		Assert.assertEquals("Escolaridade: superior", campoTreinamentoPage.getScholarity());
+		Assert.assertEquals("Esportes: Natacao Corrida", campoTreinamentoPage.getSports());
 	
 	}
 
